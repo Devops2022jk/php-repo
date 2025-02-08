@@ -1,22 +1,20 @@
-# Use the official Apache HTTPD image from Docker Hub
-FROM ubuntu:latest
+# Use the official PHP image with Apache
+FROM php:8.2-apache
 
-# Install Apache, PHP, and required PHP modules
-RUN apt-get update && \
-    apt-get install -y apache2 php libapache2-mod-php php-mysql && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Removing default index.hmtl file
+RUN rm -rf /var/www/html/index.html
 
-# Remove the default index.html file provided by Apache
-RUN rm -f /var/www/html/index.html
+# Copy the application code into the container
+COPY index.php /var/www/html
 
-# Copy your application files to the container
-COPY index.php /var/www/html/index.php
+# Set the working directory
+WORKDIR /var/www/html
 
-# Expose port 80 to access the web server
+# Grant permissions to the Apache server
+RUN chown -R www-data:www-data /var/www/html
+
+# Expose port 80
 EXPOSE 80
 
-# Start Apache in the foreground
-ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]
-WORKDIR /var/www/html/
-ENV type ppe
+# Start the Apache server
+CMD ["apache2-foreground"]
