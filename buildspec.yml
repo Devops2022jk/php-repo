@@ -5,15 +5,14 @@ phases:
       - echo Logging in to Amazon ECR....
       - aws --version
       #- $(aws ecr get-login --region ap-south-1 --no-include-email)
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 471112845858.dkr.ecr.ap-south-1.amazonaws.com
-      - # Replace with this to your repository URI
-      - REPOSITORY_URI=471112845858.dkr.ecr.ap-south-1.amazonaws.com/spring-ecr-demo
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 471112845858.dkr.ecr.ap-south-1.amazonaws.com     - # Replace with this to your repository URI
+      - REPOSITORY_URI=471112845858.dkr.ecr.ap-south-1.amazonaws.com/ng-web
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
       - echo Build started on `date`
-      - echo building the Jar file
-      - mvn clean install
+     # - echo building the Jar file
+     # - mvn clean install
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
@@ -33,4 +32,4 @@ phases:
 artifacts:
   files:
     - imagedefinitions.json
-    - target/springboot-aws-deploy.jar
+    - index.php
