@@ -41,7 +41,7 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to the AWS ECR & ECS Demo from KubensLearn!</h1>
+    <h1>Welcome to the AWS ECR & ECS Demo from KubensLearn Guys!</h1>
     <p>You're seeing a static PHP web application.</p>
     <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html" target="_blank">Learn More</a>
 </body>
